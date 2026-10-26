@@ -6,6 +6,7 @@ import androidx.activity.compose.setContent
 import androidx.activity.enableEdgeToEdge
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.shape.RoundedCornerShape
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.*
@@ -34,9 +35,18 @@ private val AulaColors = lightColorScheme(
     background = Color(0xFFF9F9FF), surface = Color(0xFFF9F9FF)
 )
 
+private val AulaShapes = Shapes(
+    small = RoundedCornerShape(8.dp),
+    medium = RoundedCornerShape(12.dp),
+    large = RoundedCornerShape(16.dp)
+)
+
+// Compose uses Roboto on Android, with the Material 3 type scale.
+private val AulaTypography = Typography()
+
 @Composable
 private fun AulaTheme(content: @Composable () -> Unit) {
-    MaterialTheme(colorScheme = AulaColors, content = content)
+    MaterialTheme(colorScheme = AulaColors, typography = AulaTypography, shapes = AulaShapes, content = content)
 }
 
 private data class Destination(val title: String, val icon: ImageVector)
