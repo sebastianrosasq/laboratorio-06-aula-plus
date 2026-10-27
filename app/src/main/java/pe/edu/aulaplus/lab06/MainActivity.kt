@@ -25,7 +25,12 @@ class MainActivity : ComponentActivity() {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
         val ejemploGuia = intent.getBooleanExtra("ejemplo_guia", false)
-        setContent { AulaTheme { if (ejemploGuia) EjemploGuia() else AulaApp() } }
+        val ejercicioGuiado = intent.getBooleanExtra("ejercicio_guiado", false)
+        setContent {
+            if (ejemploGuia) MaterialTheme { EjemploGuia() }
+            else if (ejercicioGuiado) MaterialTheme { EjercicioGuiado() }
+            else AulaTheme { AulaApp() }
+        }
     }
 }
 

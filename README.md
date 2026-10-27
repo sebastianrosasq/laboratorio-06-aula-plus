@@ -8,6 +8,12 @@ El ejemplo de la barra de la guía está en `EjemploGuia.kt`. Para abrirlo despu
 adb shell am start -n pe.edu.aulaplus.lab06/.MainActivity --ez ejemplo_guia true
 ```
 
+El ejercicio guiado con perfil, navegación y contador se abre con:
+
+```powershell
+adb shell am start -n pe.edu.aulaplus.lab06/.MainActivity --ez ejercicio_guiado true
+```
+
 Para compilar el proyecto:
 
 ```powershell
