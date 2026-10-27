@@ -24,7 +24,8 @@ class MainActivity : ComponentActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         enableEdgeToEdge()
-        setContent { AulaTheme { AulaApp() } }
+        val ejemploGuia = intent.getBooleanExtra("ejemplo_guia", false)
+        setContent { AulaTheme { if (ejemploGuia) EjemploGuia() else AulaApp() } }
     }
 }
 
