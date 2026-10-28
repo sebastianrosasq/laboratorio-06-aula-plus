@@ -7,10 +7,10 @@ import androidx.compose.foundation.layout.padding
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.automirrored.filled.ArrowBack
 import androidx.compose.material.icons.filled.Add
+import androidx.compose.material.icons.filled.Build
+import androidx.compose.material.icons.filled.Delete
 import androidx.compose.material.icons.filled.Favorite
-import androidx.compose.material.icons.filled.Home
-import androidx.compose.material.icons.filled.Search
-import androidx.compose.material.icons.filled.Settings
+import androidx.compose.material.icons.filled.Menu
 import androidx.compose.material.icons.outlined.AccountCircle
 import androidx.compose.material3.ExperimentalMaterial3Api
 import androidx.compose.material3.FloatingActionButton
@@ -34,24 +34,24 @@ import androidx.compose.ui.unit.dp
 
 private data class Opcion(val nombre: String, val icono: ImageVector)
 private val opciones = listOf(
-    Opcion("Inicio", Icons.Default.Home),
-    Opcion("Buscar", Icons.Default.Search),
+    Opcion("Herramientas", Icons.Default.Build),
+    Opcion("Opciones", Icons.Default.Menu),
     Opcion("Favoritos", Icons.Default.Favorite),
-    Opcion("Ajustes", Icons.Default.Settings)
+    Opcion("Eliminar", Icons.Default.Delete)
 )
 
 @OptIn(ExperimentalMaterial3Api::class)
 @Composable
 fun EjercicioGuiado() {
-    var seleccion by rememberSaveable { mutableIntStateOf(0) }
+    var seleccion by rememberSaveable { mutableIntStateOf(-1) }
     var perfil by rememberSaveable { mutableStateOf(false) }
     var pulsaciones by rememberSaveable { mutableIntStateOf(0) }
     Scaffold(
         topBar = {
             TopAppBar(
-                title = { Text(if (perfil) "Perfil" else opciones[seleccion].nombre) },
+                title = { Text(if (perfil) "Perfil" else opciones.getOrNull(seleccion)?.nombre ?: "Inicio") },
                 navigationIcon = {
-                    if (perfil) IconButton(onClick = { perfil = false }) {
+                    if (perfil || seleccion >= 0) IconButton(onClick = { perfil = false; seleccion = -1 }) {
                         Icon(Icons.AutoMirrored.Filled.ArrowBack, contentDescription = "Volver")
                     }
                 },
@@ -75,7 +75,7 @@ fun EjercicioGuiado() {
             }
         },
         floatingActionButton = {
-            if (!perfil && seleccion == 0) {
+            if (!perfil && seleccion == -1) {
                 FloatingActionButton(onClick = { pulsaciones++ }) {
                     Icon(Icons.Default.Add, contentDescription = "Contar pulsación")
                 }
@@ -86,12 +86,13 @@ fun EjercicioGuiado() {
             modifier = Modifier.fillMaxSize().padding(padding).padding(24.dp),
             verticalArrangement = Arrangement.spacedBy(12.dp)
         ) {
-            Text(if (perfil) "Perfil de usuario" else opciones[seleccion].nombre, style = MaterialTheme.typography.headlineSmall)
+            Text(if (perfil) "Perfil de usuario" else opciones.getOrNull(seleccion)?.nombre ?: "Inicio", style = MaterialTheme.typography.headlineSmall)
             Text(if (perfil) "Información del usuario" else when (seleccion) {
-                0 -> "Pulsaciones del botón: $pulsaciones"
-                1 -> "Vista de búsqueda"
+                -1 -> "Pulsaciones del botón: $pulsaciones"
+                0 -> "Vista de herramientas"
+                1 -> "Vista de opciones"
                 2 -> "Vista de favoritos"
-                else -> "Vista de ajustes"
+                else -> "Vista para eliminar"
             })
         }
     }
