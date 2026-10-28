@@ -20,4 +20,4 @@ Para compilar el proyecto:
 ./gradlew.bat :app:assembleDebug
 ```
 
-El diseño de las vistas está en [Figma](https://www.figma.com/design/YV6YfVh0dEvtFEPOFWkS06).
+El diseño de las cuatro vistas de Aula+ en Figma está pendiente.
